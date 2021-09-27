@@ -13,7 +13,7 @@
 	"author_homepage": "https://github.com/stefan-lonac",
 
 	"sections": {
-		"description": "This plugin contains widgets for Elementor, as well as a back top button. There is also an option to select the screen size and width of its page.",
+		"description": "This plugin contains widgets for Elementor, as well as a back top button.",
 		"installation": "(Recommended) Installation instructions.",
 		"changelog": "(Recommended) Changelog. <p>This section will be displayed by default when the user clicks 'View version x.y.z details'.</p>",
 		"custom_section": "This is a custom section labeled 'Custom Section'."

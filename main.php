@@ -1,7 +1,7 @@
 <?php
 /**
 * Plugin Name: Extra add-on Elementor
-* Description: This plugin contains widgets for Elementor, as well as a back top button. There is also an option to select the screen size and width of its page.
+* Description: This plugin contains widgets for Elementor, as well as a back top button.
 * Version: 1.0.0
 * Requires at least: 5.2
 * Requires PHP: 7.2
@@ -41,17 +41,14 @@ final class extraAO_Elementor_Widget {
     public function __construct() {
 
         require_once plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
-        $updateChecker = Puc_v4p10_Factory::buildFromHeader(
+        $updateChecker = Puc_v4_Factory::buildUpdateChecker(
+            'https://github.com/stefan-lonac/extra-add-on-elementor',
             __FILE__,
-            array(
-                'slug'         => 'extra-add-on-elementor',
-                'checkPeriod'  => 12,
-                // 'optionName'   => 'abc-custom-option',
-            )
+            'extra-add-on-elementor'
         );
 
         // Optional: If you're using a private repository, specify the access token like this:
-        $updateChecker->setAuthentication('7804432c80eb7417b7827f5f78228b13f4322279');
+        // $updateChecker->setAuthentication('7804432c80eb7417b7827f5f78228b13f4322279');
         $updateChecker->getVcsApi()->enableReleaseAssets();
 
         // Optional: Set the branch that contains the stable release.

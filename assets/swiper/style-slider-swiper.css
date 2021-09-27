@@ -1,0 +1,22 @@
+.extraAO-post-slider {
+
+}
+
+.extraAO-post-slider .extraAO-post-slide {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.extraAO-post-slider .swiper-pagination {
+    width: auto;
+}
+
+.extraAO-post-slider .swiper-pagination .swiper-pagination-bullet {
+    opacity: 1;
+}
+
+.extraAO-post-slider .swiper-button-prev,
+.extraAO-post-slider .swiper-button-next {
+    background-image: none;
+}

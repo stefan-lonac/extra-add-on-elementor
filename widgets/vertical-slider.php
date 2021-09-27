@@ -1,0 +1,813 @@
+<?php 
+
+class extreAO_slider_vertical_Widget extends \Elementor\Widget_Base { 
+
+    public $PluginName;
+
+    public function get_name() {
+        return 'extraAO-carousel-vertical';
+    }
+ 
+    public function get_title() {
+        return __( 'extraAO Vertical Slider', $PluginName );
+    }
+    
+    public function get_icon() {
+        return 'fab fa-slideshare';
+    }
+ 
+    public function get_categories() {
+        return [ 'general' ];
+    }
+
+    protected function _register_controls() {
+
+        $this->start_controls_section(
+            'content_section',
+            [
+                'label' => __( 'Content', $PluginName ),
+                'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+
+        $repeater = new \Elementor\Repeater();
+ 
+            $repeater->add_control(
+                'list_image',
+                [
+                    'label' => __( 'Choose Image', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::MEDIA,
+                    'default' => [
+                        'url' => \Elementor\Utils::get_placeholder_image_src(),
+                    ],
+                ]
+            );
+
+            $repeater->add_control(
+                'list_title', [
+                    'label' => __( 'Slider Title', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'default' => __( 'Slider Title' , $PluginName ),
+                    'label_block' => true,
+                ]
+            );
+
+            // $repeater->add_control(
+            //     'list_subtitle', [
+            //         'label' => __( 'Slider Subtitle', $PluginName ),
+            //         'type' => \Elementor\Controls_Manager::TEXT,
+            //         'default' => __( 'Slider Subtitle' , $PluginName ),
+            //         'label_block' => true,
+            //     ]
+            // );
+
+            $repeater->add_control(
+                'list_text', [
+                    'label' => __( 'Slider Text', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::WYSIWYG,
+                    'default' => __( 'Slider Text' , $PluginName ),
+                    'label_block' => true,
+                ]
+            );
+
+
+            // $repeater->add_control(
+            //     'list_image_star',
+            //     [
+            //         'label' => __( 'Choose Image Bottom', $PluginName ),
+            //         'type' => \Elementor\Controls_Manager::MEDIA,
+            //         'default' => [
+            //             'url' => \Elementor\Utils::get_placeholder_image_src(),
+            //         ],
+            //     ]
+            // );
+
+    
+            $this->add_control(
+                'list',
+                [
+                    'label' => __( 'Slider List', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::REPEATER,
+                    'fields' => $repeater->get_controls(),
+                    'default' => [
+                        [
+                            'list_title' => __( 'Title #1', $PluginName ),
+                            'list_image' => __( 'Item image.', $PluginName ),
+                        ],
+                        [
+                            'list_title' => __( 'Title #2', $PluginName ),
+                            'list_image' => __( 'Item image.', $PluginName ),
+                        ],
+                    ],
+                    'title_field' => '{{{ list_title }}}',
+                ]
+            );
+
+        $this->end_controls_section();
+
+
+        // ========= Settings =========
+        $this->start_controls_section(
+            'style_section_settings_inner',
+            [
+                'label' => __( 'Settings Inner', $PluginName ),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+            $this->add_control(
+                'autoplay_slide',
+                [
+                    'label' => __( 'Autoplay Slider', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'default' => 'true',
+                    'options' => [
+                        'true'  => __( 'Yes', $PluginName ),
+                        'false' => __( 'No', $PluginName ),
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'autoplay_slide_speed',
+                [
+                    'label' => __( 'Autoplay Speed Slider (1000 = 1s)', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::NUMBER,
+                    'min' => 500,
+                    'max' => 10000,
+                    'step' => 1,
+                    'default' => 1000,
+                ], 
+            );
+
+
+            $this->add_control(
+                'loop_slider',
+                [
+                    'label' => __( 'Loop Slider', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'default' => '',
+                    'options' => [
+                        'loop'  => __( 'Yes', $PluginName ),
+                        ''      => __( 'No', $PluginName ),
+                    ],
+                ]
+            );
+            
+
+            $this->add_control(
+                'speed_of_slider',
+                [
+                    'label' => __( 'Speed Of Slides (1000 = 1s)', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::NUMBER,
+                    'min' => 500,
+                    'max' => 10000,
+                    'step' => 1,
+                    'default' => 1000,
+                ], 
+            );
+            
+
+        $this->end_controls_section();    
+        // ========= END: Settings =========
+
+
+
+        // ========= END: Content Inner =========
+        $this->start_controls_section(
+            'style_section_content_style',
+            [
+                'label' => __( 'Content Style', $PluginName ),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+            $this->add_group_control(
+                \Elementor\Group_Control_Background::get_type(),
+                [
+                    'name' => 'slide_background_color',
+                    'label' => __( 'Background Content', $PluginName ),
+                    'types' => [ 'classic', 'gradient' ],
+                    'selector' => '{{WRAPPER}} .after-slide-bg',
+                    'separator' => 'before',
+                ]
+            );
+
+
+        $this->end_controls_section();   
+        // ========= END: Content Inner =========
+
+
+        // ========= Title =========
+        $this->start_controls_section(
+            'style_section_title',
+            [
+                'label' => __( 'Title', $PluginName ),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+
+            $this->add_group_control(
+                \Elementor\Group_Control_Typography::get_type(),
+                [
+                    'name' => 'title_style',
+                    'label' => __( 'Title Style', $PluginName ),
+                    'scheme' => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
+                    'selector' => '{{WRAPPER}} .slider-vertical-content div.slider-content div.slick__slide .extraAO-h3.slider-title',
+                ]
+            );
+
+            $this->add_responsive_control(
+                'title_color',
+                [
+                    'label' => __( 'Title Color', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'scheme' => [
+                        'type' => \Elementor\Scheme_Color::get_type(),
+                        'value' => \Elementor\Scheme_Color::COLOR_1,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-vertical-content div.slider-content div.slick__slide .extraAO-h3.slider-title' => 'color: {{VALUE}}',
+                    ],
+                ]
+            );
+
+
+            $this->add_responsive_control(
+                'title_size_margin',
+                [
+                    'label' => __( 'Margin Title', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%', 'em' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-vertical-content div.slider-content div.slick__slide .extraAO-h3.slider-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ]
+            );
+
+            
+
+            $this->add_responsive_control(
+                'title_main_size_margin',
+                [
+                    'label' => __( 'Margin Main Title', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%', 'em' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-vertical-main div.slider-nav div.slick__slide .extraAO-h3.slider-main-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'separator' => 'before',
+                ]
+            );
+
+
+            $this->add_responsive_control(
+                'title_main_size_margin',
+                [
+                    'label' => __( 'Margin Main Title', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%', 'em' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-vertical-main div.slider-nav div.slick__slide .extraAO-h3.slider-main-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'separator' => 'before',
+                ]
+            );
+
+            $this->add_group_control(
+                \Elementor\Group_Control_Typography::get_type(),
+                [
+                    'name' => 'title_style_main',
+                    'label' => __( 'Title Main Style', $PluginName ),
+                    'scheme' => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
+                    'selector' => '{{WRAPPER}} .slider-vertical-main div.slider-nav div.slick__slide .extraAO-h3.slider-main-title',
+                ],
+            );
+
+            $this->add_responsive_control(
+                'title_color_main',
+                [
+                    'label' => __( 'Title Main Color', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'scheme' => [
+                        'type' => \Elementor\Scheme_Color::get_type(),
+                        'value' => \Elementor\Scheme_Color::COLOR_1,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-vertical-main div.slider-nav div.slick__slide .extraAO-h3.slider-main-title' => 'color: {{VALUE}}',
+                    ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'title_center_color_main',
+                [
+                    'label' => __( 'Title Center Main Color', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'scheme' => [
+                        'type' => \Elementor\Scheme_Color::get_type(),
+                        'value' => \Elementor\Scheme_Color::COLOR_1,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-vertical-main div.slider-nav div.slick__slide.slick-slide.slick-current.slick-center .extraAO-h3.slider-main-title' => 'color: {{VALUE}}',
+                    ],
+                ]
+            );
+            
+
+
+        $this->end_controls_section();   
+        // ========= END: Title =========
+
+
+
+        // ========= Text =========
+        $this->start_controls_section(
+            'style_section_text',
+            [
+                'label' => __( 'Text', $PluginName ),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+
+            $this->add_group_control(
+                \Elementor\Group_Control_Typography::get_type(),
+                [
+                    'name' => 'text_style',
+                    'label' => __( 'Text Style', $PluginName ),
+                    'scheme' => \Elementor\Scheme_Typography::TYPOGRAPHY_1,
+                    'selector' => '{{WRAPPER}} .slider-main div.slick__slide .extraAO-text',
+                ],
+                
+            );
+
+            $this->add_responsive_control(
+                'text_style_color',
+                [
+                    'label' => __( 'Text Color', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'scheme' => [
+                        'type' => \Elementor\Scheme_Color::get_type(),
+                        'value' => \Elementor\Scheme_Color::COLOR_1,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-main div.slick__slide .extraAO-text' => 'color: {{VALUE}}',
+                    ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'text_style_align',
+                [
+                    'label' => __( 'Text Alignment', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::CHOOSE,
+                    'options' => [
+                        'left' => [
+                            'title' => __( 'Left', $PluginName ),
+                            'icon' => 'fa fa-align-left',
+                        ],
+                        'center' => [
+                            'title' => __( 'Center', $PluginName ),
+                            'icon' => 'fa fa-align-center',
+                        ],
+                        'right' => [
+                            'title' => __( 'Right', $PluginName ),
+                            'icon' => 'fa fa-align-right',
+                        ],
+                    ],
+                    'default' => 'left',
+                    'toggle' => true,
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-main div.slick__slide .extraAO-text' => 'text-align: {{VALUE}};',
+                    ],
+
+                ]
+            );
+
+            $this->add_responsive_control(
+                'text_style_width',
+                [
+                    'label' => __( 'Text Area Width', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 5,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 50,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-main div.slick__slide .slide-main-text' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'text_style_width_margin',
+                [
+                    'label' => __( 'Text Area Margin', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                    'size_units' => [ 'px', '%', 'em' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-main div.slick__slide .slide-main-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'separator' => 'before',
+                ]
+            );
+
+
+        $this->end_controls_section();   
+        // ========= END: Text =========
+
+        
+
+        // ========= Section Nav =========
+        $this->start_controls_section(
+            'style_section_sections_nav',
+            [
+                'label' => __( 'Section Nav', $PluginName ),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+        
+
+            $this->add_responsive_control(
+                'section_nav_top_bottom',
+                [
+                    'label' => __( 'Section Nav Top/Bottom', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 1000,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 30,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .services-slider .main-container .nav-container' => 'top: {{SIZE}}{{UNIT}};',
+                    ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'section_nav_left_right',
+                [
+                    'label' => __( 'Section Nav Left/Right', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 1000,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 30,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .services-slider .main-container .nav-container' => 'left: {{SIZE}}{{UNIT}};',
+                    ],
+                ]
+            );
+
+        $this->end_controls_section();   
+        // ========= END: Section Nav =========
+
+
+        // ========= Section Content =========
+        $this->start_controls_section(
+            'style_section_sections_content',
+            [
+                'label' => __( 'Section Content', $PluginName ),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+        
+
+            $this->add_responsive_control(
+                'section_content_top_bottom',
+                [
+                    'label' => __( 'Section Content Top/Bottom', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 1000,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 30,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-main div.slick__slide .slide-main-text' => 'top: {{SIZE}}{{UNIT}};',
+                    ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'section_content_left_right',
+                [
+                    'label' => __( 'Section Content Left/Right', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 1000,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 30,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-main div.slick__slide .slide-main-text' => 'left: {{SIZE}}{{UNIT}};',
+                    ],
+                ]
+            );
+
+        $this->end_controls_section();   
+        // ========= END: Section Content =========
+
+
+
+        // ========= Arrows =========
+        $this->start_controls_section(
+            'style_section_arrows',
+            [
+                'label' => __( 'Arrows', $PluginName ),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+        
+            $this->add_responsive_control(
+                'arrows_style_color',
+                [
+                    'label' => __( 'Arrows Color', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'scheme' => [
+                        'type' => \Elementor\Scheme_Color::get_type(),
+                        'value' => \Elementor\Scheme_Color::COLOR_1,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-vertical-main div.slider-nav .control-c i' => 'color: {{VALUE}}',
+                    ],
+                ]
+            );
+
+            $this->add_responsive_control(
+                'arrows_style_font_size',
+                [
+                    'label' => __( 'Arrows Size', $PluginName ),
+                    'type' => \Elementor\Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', 'em' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        'em' => [
+                            'min' => 1,
+                            'max' => 1000,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 30,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-vertical-main div.slider-nav .control-c i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    ],
+                ]
+            );
+
+        $this->end_controls_section();   
+        // ========= END: Arrows =========
+    }
+
+
+    protected function render() {
+        // generate the final HTML on the frontend using PHP
+        $settings = $this->get_settings_for_display();
+    
+        if ( $settings['list'] ) { ?>
+
+
+<div class="services-slider slider-vertical">
+
+    <div class="main-container slider-vertical-content sl__flex sl__ac">
+
+        <div class="nav-container slider-vertical-main">
+
+            <div class="slider-nav sl__flex sl__ac sl__dc">
+
+                <?php  $e = 0;
+                    foreach (  $settings['list'] as $item ) { ?>
+                    <div class="slick__slide sl__flex">
+                        <h3 class="extraAO-h3 slider-main-title"><?php echo $item['list_title']; ?></h3>
+                    </div>
+                <?php $e++; } ?><!-- END of ** foreach ** -->
+                
+            </div>
+
+        </div>
+
+
+        <div class="slider slider-main slider-content">
+
+        <?php $i = 0; ?>
+            <?php foreach ( $settings['list'] as $item ) { ?>
+
+                    <div class="slick__slide sl__flex-important sl__ac">
+                            
+                        <div class="extraAO-img-align">
+                            
+                            <img class="d-block extraAO-img" src="<?php echo $item['list_image']['url']; ?>" alt="<?php echo $item['list_title']; ?>" />
+                        
+                            <div class="sl__dc slide-main-text">
+                
+                                <div class="sl__flex extraAO-title-align">
+                                    <h3 class="extraAO-h3 slider-title"><?php echo $item['list_title']; ?></h3>
+                                </div>
+
+                                <div class="extraAO-text">
+                                    <?php echo $item['list_text']; ?>
+                                </div>
+                                
+                            </div>
+
+                            <span class="after-slide-bg"></span>
+
+                        </div>
+
+                    </div><!-- END of ** slick__slide ** -->
+
+                <?php $i++; ?>
+            <?php } ?><!-- END of ** foreach ** -->
+
+        </div>
+    
+    </div>
+
+
+</div>
+
+<style>
+    .after-slide-bg {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .services-slider .main-container .nav-container {
+        position: absolute;
+        z-index: 1;
+        width: 30%;
+    }
+
+    .slider-main div.slick__slide {
+        position: relative;
+    }
+
+    .slider-main div.slick__slide .slide-main-text {
+        position: absolute;
+        z-index: 1;
+    }
+
+    .d_inline-bloc {
+        display: inline-block;
+        /* width: 30%; */
+        vertical-align: middle;
+    }
+    
+    .sl__flex-important {
+        display:-webkit-box!important;
+        display:-ms-flexbox!important;
+        display:flex!important;
+    }
+
+    .slick-vertical .slick-slide {
+        text-align: center;
+    }
+
+    .slick-prev, .slick-next, 
+    .slider-vertical-main div.slider-nav div.slick__slide .extraAO-h3 {
+        cursor: pointer;
+    }
+
+    .slider-vertical-main div.slider-nav .slick-slide.slick-current, 
+    .slider-vertical-main div.slider-nav .slick-slide.slick-center {
+        transform:scale(1.4);
+    }
+
+    .slider-vertical-main div.slider-nav .control-c {
+        margin: 0;
+    }
+</style>
+
+        <script>
+
+            (function($){
+                $(document).ready(function(){
+
+                    $('.slider-main').slick({
+                        dots: false,
+                        arrows: false,
+                        asNavFor: '.slider-nav',
+                        vertical: true,   
+                        speed: <?php echo $settings['speed_of_slider']; ?>,
+                        autoplay: <?php echo $settings['autoplay_slide']; ?>,
+                        autoplaySpeed: <?php echo $settings['autoplay_slide_speed']; ?>,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                        centerMode: true,
+                        adaptiveHeight: true
+                    });
+
+                    // Get titles from the DOM
+                    var titleMain  = $('.slider-nav');
+                    var titleSubs  = titleMain.find("slick-active");
+
+                    titleMain.slick({
+                        arrows: true,
+                        infinite: true,
+                        dots: false,
+                        centerMode: true,
+                        slidesToShow: 3,
+                        centerPadding: "0",
+                        draggable: false,
+                        pauseOnHover: false,
+                        swipe: false,
+                        touchMove: false,
+                        vertical: true,
+                        useTransform: true,
+                        asNavFor: '.slider-main',
+                        cssEase: 'cubic-bezier(0.645, 0.045, 0.355, 1.000)',
+                        adaptiveHeight: true,
+                        autoplay: <?php echo $settings['autoplay_slide']; ?>,
+                        speed: <?php echo $settings['speed_of_slider']; ?>,
+                        autoplaySpeed: <?php echo $settings['autoplay_slide_speed']; ?>,
+                        prevArrow:"<p class='a-left control-c prev slick-prev'> <i class='fas fa-angle-up'></i> </p>",
+                        nextArrow:"<p class='a-right control-c next slick-next'> <i class='fas fa-angle-down'></i> </p>"
+                    });
+
+                    // On init
+                    $(".slick-dupe").each(function(index, el) {
+                        $("#animatedHeading").slick('slickAdd', "<div>" + el.innerHTML + "</div>");
+                    });
+
+
+                });
+            })(jQuery);
+
+        </script>
+
+    <?php }// END of ** if 'list' **
+
+    }// END of ** render() **
+
+}// END of ** Class extreAO_slider_horizontal_Widget **

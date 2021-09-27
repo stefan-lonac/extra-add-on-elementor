@@ -48,7 +48,7 @@ final class extraAO_Elementor_Widget {
         );
 
         // Optional: If you're using a private repository, specify the access token like this:
-        // $updateChecker->setAuthentication('7804432c80eb7417b7827f5f78228b13f4322279');
+        $updateChecker->setAuthentication('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');
         $updateChecker->getVcsApi()->enableReleaseAssets();
 
         // Optional: Set the branch that contains the stable release.
@@ -80,7 +80,7 @@ final class extraAO_Elementor_Widget {
         } return;
 
 
-        require_once( __DIR__ . '/plugin-update-checker-master/plugin-update-checker.php');
+        require_once( __DIR__ . '/plugin-update-checker/plugin-update-checker.php');
         $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
             'https://github.com/stefan-lonac/extra-add-on-elementor',
             __FILE__,
@@ -89,7 +89,7 @@ final class extraAO_Elementor_Widget {
         
         $myUpdateChecker->getVcsApi()->enableReleaseAssets();
         //Optional: If you're using a private repository, specify the access token like this:
-        $myUpdateChecker->setAuthentication('sycwd2MFz2jc2eBeh-NQ');
+        $myUpdateChecker->setAuthentication('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');
 
         //Optional: Set the branch that contains the stable release.
         $myUpdateChecker->setBranch('master');

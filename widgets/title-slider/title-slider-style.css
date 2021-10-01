@@ -1,0 +1,33 @@
+.title-slider .title-slider-main p.control-c {
+    position: absolute;
+    margin: 0;
+}
+.title-slider .title-slider-main .extraAO-h3.slider-main-title {
+    text-align: center;
+}
+
+ .title-slider .title-slider-main .slick-slide.slick-current, 
+ .title-slider .title-slider-main .slick-slide.slick-center {
+    transform:scale(1.4);
+}
+
+.slick-dots {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    left: 0;
+}
+
+.slick-dots li {
+    cursor: pointer;
+}
+
+.slick-dots li button {
+    display: none;
+}
+

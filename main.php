@@ -72,7 +72,7 @@ final class extraAO_Elementor_Widget {
         require_once( __DIR__ . '/admin/options_register.php' );
 
         // Register Wordpress Customize Controll
-        require_once( __DIR__ . '/controls/controls-wp-customize.php' );
+        // require_once( __DIR__ . '/controls/controls-wp-customize.php' );
 
         // Back To Top Button Show fixed on page when settings is CHECKED
         if (get_option('activate-back-to-top') == 1) {
@@ -165,18 +165,28 @@ final class extraAO_Elementor_Widget {
     public function init_widgets() {
  
         // Include Widget files
-        require_once( __DIR__ . '/widgets/slider-tetestimonial.php' );
-        require_once( __DIR__ . '/widgets/post-slider.php' );
-        require_once( __DIR__ . '/widgets/vertical-slider.php' );
-        require_once( __DIR__ . '/widgets/title-slider.php' );
-        require_once( __DIR__ . '/widgets/dots-slider.php' );
+
+        // Vertical Slider
+        require_once( __DIR__ . '/widgets/vertical-slider/vertical-slider.php' );
+
+        // Slider Tetestimonial
+        require_once( __DIR__ . '/widgets/slider-testimonial/slider-testimonial.php' );
+
+        // Post Slider
+        require_once( __DIR__ . '/widgets/post-slider/post-slider.php' );
+
+        // Title Slider
+        require_once( __DIR__ . '/widgets/title-slider/title-slider.php' );
+
+        // Slider Dots
+        // require_once( __DIR__ . '/widgets/dots-slider/dots-slider.php' );
 
         // Register widget
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_slider_testimonial_Widget() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_slider_posts_Widget() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_slider_vertical_Widget() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_slider_title_Widget() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_dots_slider_Widget() );
+        // \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_dots_slider_Widget() );
  
     }
  
@@ -206,8 +216,27 @@ final class extraAO_Elementor_Widget {
         wp_enqueue_script("extraAO-slider-js-swiper-main", plugins_url( "/assets/swiper/swiper-main.js", __FILE__ ) );
         wp_enqueue_style("extraAO-slider-posts-css-swiper", plugins_url( "/assets/swiper/style-slider-swiper.css", __FILE__ ) );
 
+        // Slick Slider
         wp_register_script("slick-js", "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js", array(), false, true);
         wp_enqueue_script("slick-js");
+        wp_register_style("slick-css", "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css", array(), false, "all" );
+        wp_enqueue_style("slick-css");
+
+        // FontAwesome
+        wp_register_script("fontAwesome-js", "https://kit.fontawesome.com/acc1cbae3b.js", array(), false, true);
+        wp_enqueue_script("fontAwesome-js");
+
+        // Vertical Slider
+        wp_enqueue_style("extraAO-vertical-slider-css", plugins_url( "/widgets/vertical-slider/style-vertical.css", __FILE__ ) );
+
+        // Testemonial Slider
+        wp_enqueue_style("extraAO-testimonial-slider-css", plugins_url( "/widgets/slider-testimonial/style-testimonial.css", __FILE__ ) );
+
+        // Title Slider
+        wp_enqueue_style("extraAO-title-slider-css", plugins_url( "/widgets/title-slider/title-slider-style.css", __FILE__ ) );
+
+        // Dots Slider
+        // wp_enqueue_style("extraAO-dots-slider-css", plugins_url( "/widgets/dots-slider/dots-style.css", __FILE__ ) );
 
     }
 
@@ -229,6 +258,10 @@ final class extraAO_Elementor_Widget {
         // END: Toggle Bootstrap
         
         wp_enqueue_style( 'extraAO-admin-style', plugins_url( '/assets/css/extraAO-admin-style.css', __FILE__ ), array(), null, false );
+
+        // FontAwesome
+        wp_register_script("fontAwesome-js-admin", "https://kit.fontawesome.com/acc1cbae3b.js", array(), false, true);
+        wp_enqueue_script("fontAwesome-js-admin");
     }
 
 

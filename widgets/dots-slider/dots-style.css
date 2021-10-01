@@ -1,0 +1,5 @@
+.slider-dots p.control-c {
+    position: absolute;
+    margin: 0;
+    z-index: 99;
+}

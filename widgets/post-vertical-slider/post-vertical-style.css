@@ -1,0 +1,71 @@
+.post-vertical .main-container  {
+    position: relative;
+}
+.post-vertical .main-container .nav-container {
+    position: absolute;
+    z-index: 9;
+}
+
+.post-vertical .main-container .nav-container .slider-nav .control-c {
+    margin: 0;
+    position: absolute;
+    top: -10px;
+}
+
+.post-vertical .main-container .nav-container .slick__slide {
+    position: relative;
+    border: none;
+}
+
+.post-vertical .main-container .nav-container .slick__slide .line-dot {
+    width: 1px;
+    height: 100%;
+    background-color: #fff;
+    position: absolute;
+    left: 9px;
+    top: 0;
+}
+
+.post-vertical .main-container .nav-container .slick__slide.slick-current .line-dot .dot.activeContentDot {
+    border-radius: 50%;
+    position: absolute;
+    left: -7px;
+    top: 45%;
+    -webkit-animation: fadeIn 0.8s;
+    animation: fadeIn 0.8s;
+}
+
+/* @media (max-width: 769px){
+
+    .post-vertical .main-container .nav-container {
+        position: initial;
+        width: 70%;
+        padding: 20px;
+    }
+
+    .post-vertical .main-container .nav-container .slick__slide .line-dot {
+        width: 100%;
+        height: 1px;
+        left: 0;
+        top: 5px;
+    }
+
+    .post-vertical .main-container .nav-container .slick__slide.slick-current .line-dot .dot.activeContentDot {
+        left: 10px;
+        top: -6px;
+    }
+
+    .post-vertical .main-container .nav-container .slider-nav .control-c {
+        position: absolute;
+        top: -10px;
+    }
+
+    .post-vertical .main-container .nav-container .slider-nav .control-c.slick-next {
+        right: -15px;
+    }
+
+    .post-vertical .main-container .nav-container .slider-nav .control-c.slick-prev {
+        left: -15px;
+    }
+
+} */

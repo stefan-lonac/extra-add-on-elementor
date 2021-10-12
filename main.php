@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Extra add-on Elementor
 * Description: This plugin contains widgets for Elementor, as well as a back top button.
-* Version: 1.0.2
+* Version: 1.0.3
 * Requires at least: 5.2
 * Requires PHP: 7.2
 * Author: Stefan Loncaric
@@ -37,6 +37,7 @@ final class extraAO_Elementor_Widget {
         }
         return self::$_instance;
     }
+    
  
     public function __construct() {
 
@@ -169,6 +170,9 @@ final class extraAO_Elementor_Widget {
         // Vertical Slider
         require_once( __DIR__ . '/widgets/vertical-slider/vertical-slider.php' );
 
+        // Post Vertical Slider
+        require_once( __DIR__ . '/widgets/post-vertical-slider/post-vertical.php' );
+
         // Slider Tetestimonial
         require_once( __DIR__ . '/widgets/slider-testimonial/slider-testimonial.php' );
 
@@ -186,7 +190,7 @@ final class extraAO_Elementor_Widget {
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_slider_posts_Widget() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_slider_vertical_Widget() );
         \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_slider_title_Widget() );
-        // \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_dots_slider_Widget() );
+        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \extreAO_slider_post_vertical_Widget() );
  
     }
  
@@ -235,8 +239,8 @@ final class extraAO_Elementor_Widget {
         // Title Slider
         wp_enqueue_style("extraAO-title-slider-css", plugins_url( "/widgets/title-slider/title-slider-style.css", __FILE__ ) );
 
-        // Dots Slider
-        // wp_enqueue_style("extraAO-dots-slider-css", plugins_url( "/widgets/dots-slider/dots-style.css", __FILE__ ) );
+        // Post Vertical Slider
+        wp_enqueue_style("extraAO-post-vertical-css", plugins_url( "/widgets/post-vertical-slider/post-vertical-style.css", __FILE__ ) );
 
     }
 

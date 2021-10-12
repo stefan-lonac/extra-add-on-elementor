@@ -13,11 +13,11 @@
     width: 30%;
 }
 
-.slider-main div.slick__slide {
+.services-slider .slider-main div.slick__slide {
     position: relative;
 }
 
-.slider-main div.slick__slide .slide-main-text {
+.services-slider .slider-main div.slick__slide .slide-main-text {
     position: absolute;
     z-index: 1;
 }

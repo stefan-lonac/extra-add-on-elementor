@@ -689,7 +689,7 @@ class extreAO_slider_post_vertical_Widget extends \Elementor\Widget_Base {
 
         $args = array(
             'post_type'         => 'post',
-            'posts_per_page'    => $settings['number_of_posts_slide'],
+            'posts_per_page'    => 30,
             // 'category_name'     => $settings['categories_list_show_post'],
             'orderby'           => $settings['orderby_post'],
             'order'             => $settings['order_post'],
@@ -808,7 +808,7 @@ class extreAO_slider_post_vertical_Widget extends \Elementor\Widget_Base {
                             infinite: true,
                             dots: false,
                             centerMode: true,
-                            slidesToShow: 3,
+                            slidesToShow: <?php echo $settings['number_of_posts_slide']; ?>,
                             centerPadding: "0",
                             draggable: false,
                             pauseOnHover: false,

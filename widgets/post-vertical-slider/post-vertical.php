@@ -796,24 +796,26 @@ class extreAO_slider_post_vertical_Widget extends \Elementor\Widget_Base {
                             slidesToScroll: 1,
                             // initialSlide: 1,
                             // centerMode: true,
-                            adaptiveHeight: true
+                            adaptiveHeight: true,
+                            infinite: false,
                         });
 
                         // Get titles from the DOM
                         var titleMain  = $(sliderNavId);
                         var titleSubs  = titleMain.find("slick-active");
-                        
+
+
                         titleMain.slick({
                             arrows: true,
                             infinite: true,
                             dots: false,
                             centerMode: true,
-                            slidesToShow: <?php echo $settings['number_of_posts_slide']; ?>,
+                            slidesToShow: <?php if ($settings['number_of_posts_slide'] <= 2) {echo 1.99;} else {echo $settings['number_of_posts_slide'];} ?>,
                             centerPadding: "0",
                             draggable: false,
                             pauseOnHover: false,
                             swipe: false,
-                            touchMove: false,
+                            touchMove: true,
                             vertical: true,
                             useTransform: true,
                             asNavFor: sliderId,
@@ -850,6 +852,13 @@ class extreAO_slider_post_vertical_Widget extends \Elementor\Widget_Base {
 
                             ]
                         });
+
+                        // var slideCount = $(".slider-nav .slick__slide").length;
+                        // console.log(slideCount)
+                        // if (slideCount <= 2) {
+                        // // clone element
+                        //     $(".slider-nav .slick-track").children().clone(true, true).appendTo(".slider-nav .slick-track");
+                        // }
 
                         $(".slick-current").each(function(){
 
